@@ -1,0 +1,809 @@
+/* ============================================
+   BRUTALIST REGISTRATION FORM
+   Bold, Asymmetric, Distinctive Design
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #0d0d0d;
+    --white: #ffffff;
+    --gray-dark: #1a1a1a;
+    --gray-medium: #2a2a2a;
+    --gray-light: #404040;
+    --accent: #00ff85;
+    --accent-dim: #00cc6a;
+    --error: #ff3366;
+    --warning: #ffaa00;
+    --success: #00ff85;
+    
+    --font-mono: 'Space Mono', monospace;
+    --font-sans: 'Work Sans', sans-serif;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   PAGE LAYOUT
+   ============================================ */
+
+.page-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Side Panel */
+.side-panel {
+    width: 300px;
+    background: var(--gray-dark);
+    border-right: 3px solid var(--accent);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 3rem 2rem;
+}
+
+.side-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 133, 0.03) 2px,
+            rgba(0, 255, 133, 0.03) 4px
+        );
+    pointer-events: none;
+}
+
+.side-content {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.step-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.step {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-light);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--gray-light);
+    background: transparent;
+    transition: all 0.3s;
+}
+
+.step.active {
+    background: var(--accent);
+    color: var(--black);
+    border-color: var(--accent);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.step-line {
+    width: 30px;
+    height: 2px;
+    background: var(--gray-light);
+}
+
+.side-info {
+    margin-top: 2rem;
+}
+
+.side-info h2 {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+
+.side-info p {
+    color: var(--gray-light);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.feature {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    padding: 0.5rem 0;
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+}
+
+/* Main Panel */
+.main-panel {
+    flex: 1;
+    padding: 3rem;
+    overflow-y: auto;
+    background: var(--black);
+}
+
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   FORM HEADER
+   ============================================ */
+
+.form-header {
+    margin-bottom: 3rem;
+    animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: var(--black);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.form-header h1 {
+    font-family: var(--font-sans);
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+.highlight {
+    color: var(--accent);
+    display: block;
+    font-style: italic;
+}
+
+/* ============================================
+   FORM GRID
+   ============================================ */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-block.full {
+    grid-column: 1 / -1;
+}
+
+.input-block.half {
+    grid-column: span 1;
+}
+
+/* ============================================
+   LABELS
+   ============================================ */
+
+.input-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.label-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-dark);
+    border: 2px solid var(--accent);
+}
+
+.label-text {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--white);
+}
+
+/* ============================================
+   INPUTS
+   ============================================ */
+
+.styled-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--white);
+    background: var(--gray-dark);
+    border: 2px solid var(--gray-medium);
+    outline: none;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+}
+
+.styled-input::placeholder {
+    color: var(--gray-light);
+}
+
+.styled-input:focus {
+    border-color: var(--accent);
+    background: var(--gray-medium);
+    transform: translateX(3px);
+}
+
+.styled-input.invalid {
+    border-color: var(--error);
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.styled-input.valid {
+    border-color: var(--success);
+}
+
+/* ============================================
+   PASSWORD CONTAINER
+   ============================================ */
+
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    padding: 0 1.25rem;
+    background: var(--gray-medium);
+    border: 2px solid var(--gray-medium);
+    border-left: none;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+}
+
+.password-toggle:hover {
+    background: var(--accent);
+    color: var(--black);
+}
+
+.password-container .styled-input {
+    padding-right: 100px;
+}
+
+/* ============================================
+   PASSWORD STRENGTH
+   ============================================ */
+
+.strength-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.strength-bars {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+}
+
+.strength-bar {
+    height: 4px;
+    flex: 1;
+    background: var(--gray-medium);
+    transition: all 0.3s;
+}
+
+.strength-bar.active {
+    background: var(--accent);
+}
+
+.strength-bar.weak {
+    background: var(--error);
+}
+
+.strength-bar.medium {
+    background: var(--warning);
+}
+
+.strength-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gray-light);
+}
+
+.strength-label.weak { color: var(--error); }
+.strength-label.medium { color: var(--warning); }
+.strength-label.strong { color: var(--success); }
+
+/* ============================================
+   REQUIREMENTS
+   ============================================ */
+
+.requirements {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.75rem;
+}
+
+.req {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--gray-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.req-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--gray-light);
+    display: block;
+}
+
+.req.met {
+    color: var(--success);
+}
+
+.req.met .req-dot {
+    background: var(--success);
+}
+
+/* ============================================
+   GENDER OPTIONS
+   ============================================ */
+
+.gender-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.gender-option {
+    cursor: pointer;
+}
+
+.gender-option input {
+    display: none;
+}
+
+.option-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: var(--gray-dark);
+    border: 2px solid var(--gray-medium);
+    color: var(--gray-light);
+    transition: all 0.2s;
+}
+
+.gender-option:hover .option-box {
+    border-color: var(--accent);
+}
+
+.gender-option input:checked + .option-box {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--black);
+    transform: scale(1.1);
+}
+
+/* ============================================
+   TERMS SECTION
+   ============================================ */
+
+.terms-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--gray-dark);
+    border-left: 3px solid var(--accent);
+}
+
+.terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.terms-checkbox input {
+    display: none;
+}
+
+.checkbox-box {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--gray-medium);
+    background: transparent;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 2px;
+}
+
+.terms-checkbox:hover .checkbox-box {
+    border-color: var(--accent);
+}
+
+.terms-checkbox input:checked + .checkbox-box {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.terms-checkbox input:checked + .checkbox-box::after {
+    content: '✓';
+    color: var(--black);
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.terms-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.terms-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid var(--accent);
+}
+
+.terms-link:hover {
+    color: var(--white);
+    border-bottom-color: var(--white);
+}
+
+/* ============================================
+   ERROR MESSAGES
+   ============================================ */
+
+.error-message {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--error);
+    margin-top: 0.5rem;
+    display: block;
+    min-height: 1rem;
+}
+
+/* ============================================
+   SUBMIT BUTTON
+   ============================================ */
+
+.submit-button {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    background: transparent;
+    border: 3px solid var(--accent);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 0 100%);
+    transition: all 0.3s;
+}
+
+.btn-bg {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    transition: left 0.3s;
+    z-index: 0;
+}
+
+.submit-button:hover .btn-bg {
+    left: 0;
+}
+
+.submit-button:hover {
+    color: var(--black);
+}
+
+.btn-text,
+.btn-arrow {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-arrow {
+    font-size: 1.5rem;
+    transition: transform 0.3s;
+}
+
+.submit-button:hover .btn-arrow {
+    transform: translateX(5px);
+}
+
+/* ============================================
+   MODAL
+   ============================================ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-box {
+    background: var(--gray-dark);
+    border: 3px solid var(--accent);
+    padding: 3rem 2.5rem;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+    animation: modalSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-icon {
+    margin-bottom: 2rem;
+}
+
+.check-circle {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    background: var(--accent);
+    border: 3px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    animation: checkRotate 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes checkRotate {
+    0% {
+        transform: rotate(-180deg) scale(0);
+    }
+    100% {
+        transform: rotate(0) scale(1);
+    }
+}
+
+.check-mark {
+    font-size: 3rem;
+    color: var(--black);
+    font-weight: 700;
+}
+
+.modal-title {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+}
+
+.modal-text {
+    color: var(--gray-light);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.modal-button {
+    padding: 1rem 3rem;
+    background: var(--accent);
+    border: 3px solid var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--black);
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    transition: all 0.3s;
+}
+
+.modal-button:hover {
+    background: transparent;
+    color: var(--accent);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .side-panel {
+        width: 250px;
+    }
+    
+    .main-panel {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-wrapper {
+        flex-direction: column;
+    }
+    
+    .side-panel {
+        width: 100%;
+        border-right: none;
+        border-bottom: 3px solid var(--accent);
+        padding: 2rem;
+    }
+    
+    .step-indicator {
+        justify-content: center;
+    }
+    
+    .side-info {
+        text-align: center;
+    }
+    
+    .feature-list {
+        align-items: center;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .input-block.half {
+        grid-column: 1;
+    }
+    
+    .form-header h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-panel {
+        padding: 1.5rem;
+    }
+    
+    .form-header h1 {
+        font-size: 2rem;
+    }
+    
+    .requirements {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .gender-options {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+*:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
